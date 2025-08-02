@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes"
+    />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Fitness Program</title>
+    <meta name="keywords" content="fitnessPlan, fitness, gym, calories" />
+    <meta name="author" content="Omar Ahmed" />
+    <link rel="icon" type="image/x-icon" href="assets/icon.png" />
+    <link rel="stylesheet" href="assets/styles.css" />
+  </head>
+  <body>
+    <!-- Top Controls -->
+    <div class="top-controls">
+      <button
+        class="control-btn lang-btn"
+        id="langToggle"
+        onclick="toggleLanguage()"
+      >
+        EN
+      </button>
+      <button
+        class="control-btn theme-btn"
+        id="themeToggle"
+        onclick="toggleTheme()"
+      >
+        ☀️
+      </button>
+    </div>
+
+    <div class="container table-responsive">
+      <div class="section" style="text-align: center">
+        <h1 id="welcomeTitle">Fitness Program</h1>
+        <h3 id="welcomeSubtitle">
+          Welcome to your complete fitness and diet guide
+        </h3>
+        <p id="redirectText">Redirecting to account options...</p>
+        <button class="btn" onclick="redirect()" id="continueBtn">
+          Continue
+        </button>
+      </div>
+    </div>
+
+    <div
+      id="dateTime"
+      style="
+        text-align: center;
+        margin-top: 15px;
+        font-size: 12px;
+        color: #7f8c8d;
+      "
+    ></div>
+
+    <script src="assets/main.js"></script>
+    <script>
+      function redirect() {
+        window.location.href = "account-choice.html";
+      }
+
+      // Auto-redirect after 2 seconds
+      setTimeout(redirect, 2000);
+    </script>
+  </body>
+</html>

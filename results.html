@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes"
+    />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title id="resultsPageTitle">Fitness Program - Results</title>
+    <meta name="keywords" content="fitnessPlan, fitness, gym, calories" />
+    <meta name="author" content="Omar Ahmed" />
+    <link rel="icon" type="image/x-icon" href="assets/icon.png" />
+    <link rel="stylesheet" href="assets/styles.css" />
+  </head>
+  <body>
+    <!-- Top Controls -->
+    <div class="top-controls">
+      <button
+        class="control-btn lang-btn"
+        id="langToggle"
+        onclick="toggleLanguage()"
+      >
+        EN
+      </button>
+      <button
+        class="control-btn theme-btn"
+        id="themeToggle"
+        onclick="toggleTheme()"
+      >
+        ☀️
+      </button>
+    </div>
+
+    <div class="container table-responsive">
+      <header id="mainHeader">
+        <h1 id="welcomeMessage">Welcome to the Fitness Program</h1>
+        <h3 id="guideMessage">
+          This is your complete guide to your diet and workouts
+        </h3>
+      </header>
+
+      <div id="results" class="section">
+        <h2 id="resultsTitle">Results</h2>
+        <div id="requirements">
+          <h3 id="needsTitle">Your Daily Needs:</h3>
+          <div class="results-grid">
+            <div class="result-item">
+              <span class="result-label" id="caloriesLabel">Calories:</span>
+              <span id="caloriesResult" class="result-value">0</span> kcal
+            </div>
+            <div class="result-item">
+              <span class="result-label" id="proteinLabel">Protein:</span>
+              <span id="proteinResult" class="result-value">0</span> g
+            </div>
+            <div class="result-item">
+              <span class="result-label" id="fatLabel">Fat:</span>
+              <span id="fatResult" class="result-value">0</span> g
+            </div>
+            <div class="result-item">
+              <span class="result-label" id="carbsLabel">Carbs:</span>
+              <span id="carbsResult" class="result-value">0</span> g
+            </div>
+            <div class="result-item">
+              <span class="result-label" id="waterLabel">Water:</span>
+              <span id="waterResult" class="result-value">0</span> ml
+            </div>
+          </div>
+        </div>
+
+        <div id="mealPlanSection" class="hidden">
+          <h3 id="mealTitle">Meal Plan</h3>
+          <div class="meal-plan">
+            <div class="meal" id="breakfast">
+              <h4 id="breakfastLabel">Breakfast</h4>
+              <div class="meal-options"></div>
+              <button
+                class="btn meal-btn"
+                id="selectBreakfast"
+                data-meal="breakfast"
+              ></button>
+              <p id="remainingBreakfast">
+                <span id="remainingCalories"></span>
+                <span id="remainingCaloriesBreakfast">0</span> kcal
+              </p>
+              <div class="form-group">
+                <label id="editBreakfastLabel">Edit Breakfast?</label>
+                <div class="radio-group">
+                  <input
+                    type="radio"
+                    id="editBreakfastYes"
+                    name="editBreakfast"
+                    value="yes"
+                  /><label for="editBreakfastYes" id="yes">Yes</label>
+                  <input
+                    type="radio"
+                    id="editBreakfastNo"
+                    name="editBreakfast"
+                    value="no"
+                    checked
+                  /><label for="editBreakfastNo" id="no">No</label>
+                </div>
+              </div>
+            </div>
+            <div class="meal" id="lunch">
+              <h4 id="lunchLabel">Lunch</h4>
+              <div class="meal-options"></div>
+              <button
+                class="btn meal-btn"
+                id="selectLunch"
+                data-meal="lunch"
+              ></button>
+              <p id="remainingLunch">
+                <span id="remainingCalories">Remaining Calories</span>:
+                <span id="remainingCaloriesLunch">0</span> kcal
+              </p>
+              <div class="form-group">
+                <label id="editLunchLabel">Edit Lunch?</label>
+                <div class="radio-group">
+                  <input
+                    type="radio"
+                    id="editLunchYes"
+                    name="editLunch"
+                    value="yes"
+                  /><label for="editLunchYes" id="yes">Yes</label>
+                  <input
+                    type="radio"
+                    id="editLunchNo"
+                    name="editLunch"
+                    value="no"
+                    checked
+                  /><label for="editLunchNo" id="no">No</label>
+                </div>
+              </div>
+            </div>
+            <div class="meal" id="dinner">
+              <h4 id="dinnerLabel">Dinner</h4>
+              <div class="meal-options"></div>
+              <button
+                class="btn meal-btn"
+                id="selectDinner"
+                data-meal="dinner"
+              ></button>
+              <p id="remainingDinner">
+                <span id="remainingCalories">Remaining Calories</span>:
+                <span id="remainingCaloriesDinner">0</span> kcal
+              </p>
+              <div class="form-group">
+                <label id="editDinnerLabel">Edit Dinner?</label>
+                <div class="radio-group">
+                  <input
+                    type="radio"
+                    id="editDinnerYes"
+                    name="editDinner"
+                    value="yes"
+                  /><label for="editDinnerYes" id="yes">Yes</label>
+                  <input
+                    type="radio"
+                    id="editDinnerNo"
+                    name="editDinner"
+                    value="no"
+                    checked
+                  /><label for="editDinnerNo" id="no">No</label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="snacksSection" class="hidden">
+            <h4 id="snacksLabel">Snacks</h4>
+            <div class="meal-options"></div>
+            <button class="btn" id="snacksBtn">
+              Select Snacks / اختر الوجبات الخفيفة
+            </button>
+            <p id="remainingSnacks">
+              <span id="remainingCalories">Remaining Calories</span>:
+              <span id="remainingCaloriesSnacks">0</span> kcal
+            </p>
+            <div class="form-group">
+              <label id="editSnacksLabel">Edit Snacks?</label>
+              <div class="radio-group">
+                <input
+                  type="radio"
+                  id="editSnacksYes"
+                  name="editSnacks"
+                  value="yes"
+                /><label for="editSnacksYes" id="yes">Yes</label>
+                <input
+                  type="radio"
+                  id="editSnacksNo"
+                  name="editSnacks"
+                  value="no"
+                  checked
+                /><label for="editSnacksNo" id="no">No</label>
+              </div>
+            </div>
+          </div>
+
+          <div id="totalConsumed" class="hidden">
+            <h4 id="totalLabel">Total Consumed</h4>
+            <div class="results-grid">
+              <div class="result-item">
+                <span class="result-label" id="caloriesLabel">Calories:</span>
+                <span id="totalCalories">0</span> kcal
+              </div>
+              <div class="result-item">
+                <span class="result-label" id="proteinLabel">Protein:</span>
+                <span id="totalProtein">0</span> g
+              </div>
+              <div class="result-item">
+                <span class="result-label" id="carbsLabel">Carbs:</span>
+                <span id="totalCarbs">0</span> g
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="vitaminsSection" class="hidden">
+          <h3 id="vitaminsTitle">Your Vitamin and Mineral Needs</h3>
+          <div class="results-grid">
+            <div class="result-item">
+              <span class="result-label" id="vitaminCLabel">Vitamin C:</span>
+              <span id="vitaminC">0</span> mg
+            </div>
+            <div class="result-item">
+              <span class="result-label" id="vitaminDLabel">Vitamin D:</span>
+              <span id="vitaminD">0</span> µg
+            </div>
+            <div class="result-item">
+              <span class="result-label" id="calciumLabel">Calcium:</span>
+              <span id="calcium">0</span> mg
+            </div>
+            <div class="result-item">
+              <span class="result-label" id="ironLabel">Iron:</span>
+              <span id="iron">0</span> mg
+            </div>
+          </div>
+        </div>
+
+        <div id="fitnessPlanSection" class="hidden">
+          <h3 id="fitnessTitle">Workout Plan</h3>
+          <div class="form-group">
+            <label id="gymDaysLabel"
+              >How many days per week will you go to the gym?</label
+            >
+            <select id="gymDays">
+              <option value="2">2 days</option>
+              <option value="3">3 days</option>
+              <option value="4">4 days</option>
+              <option value="5">5 days</option>
+            </select>
+            <button id="showPlanBtn" class="btn"></button>
+          </div>
+
+          <div id="trainingSystem" class="hidden">
+            <h4 id="systemLabel">Your Training System:</h4>
+            <p id="systemDescription"></p>
+          </div>
+
+          <div id="supplementsSection" class="hidden">
+            <h4 id="suppLabel">Suggested Sports Supplements:</h4>
+            <ul id="supplementsList"></ul>
+          </div>
+
+          <div id="muscleGroupsSection" class="hidden">
+            <h4 id="muscleLabel">What will you train today?</h4>
+            <div class="muscle-groups">
+              <label
+                ><input type="checkbox" name="muscleGroup" value="chest" />
+                Chest</label
+              >
+              <label
+                ><input type="checkbox" name="muscleGroup" value="back" />
+                Back</label
+              >
+              <label
+                ><input type="checkbox" name="muscleGroup" value="shoulder" />
+                Shoulders</label
+              >
+              <label
+                ><input type="checkbox" name="muscleGroup" value="arm" />
+                Arms</label
+              >
+              <label
+                ><input type="checkbox" name="muscleGroup" value="leg" />
+                Legs</label
+              >
+            </div>
+            <button id="showExercisesBtn" class="btn"></button>
+          </div>
+
+          <div id="exercisesSection" class="hidden"></div>
+        </div>
+
+        <div style="text-align: center; margin-top: 20px">
+          <button
+            class="btn"
+            id="backToBasicInfoBtn"
+            onclick="goBack()"
+          ></button>
+          <button class="btn" id="logoutBtn" onclick="logout()"></button>
+        </div>
+      </div>
+    </div>
+
+    <div
+      id="dateTime"
+      style="
+        text-align: center;
+        margin-top: 15px;
+        font-size: 12px;
+        color: #7f8c8d;
+      "
+    ></div>
+
+    <script src="assets/results.js"></script>
+    <script src="assets/main.js"></script>
+  </body>
+</html>

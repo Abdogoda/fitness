@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes"
+    />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title id="basicInfoPageTitle">Fitness Program - Basic Information</title>
+    <meta name="keywords" content="fitnessPlan, fitness, gym, calories" />
+    <meta name="author" content="Omar Ahmed" />
+    <link rel="icon" type="image/x-icon" href="assets/icon.png" />
+    <link rel="stylesheet" href="assets/styles.css" />
+  </head>
+  <body>
+    <!-- Top Controls -->
+    <div class="top-controls">
+      <button
+        class="control-btn lang-btn"
+        id="langToggle"
+        onclick="toggleLanguage()"
+      >
+        EN
+      </button>
+      <button
+        class="control-btn theme-btn"
+        id="themeToggle"
+        onclick="toggleTheme()"
+      >
+        ☀️
+      </button>
+    </div>
+
+    <div class="container table-responsive">
+      <header id="mainHeader">
+        <h1 id="welcomeMessage">Welcome to the Fitness Program</h1>
+        <h3 id="guideMessage">
+          This is your complete guide to your diet and workouts
+        </h3>
+      </header>
+
+      <div id="user-info" class="section">
+        <h2 id="infoTitle">Basic Information</h2>
+        <form id="userForm">
+          <div class="form-group">
+            <label id="nameLabel">Your Name:</label>
+            <input type="text" id="userName" required />
+          </div>
+
+          <div class="form-group">
+            <label id="genderLabel">Gender:</label>
+            <div class="radio-group">
+              <input
+                type="radio"
+                id="male"
+                name="gender"
+                value="male"
+                required
+              /><label for="male" id="maleTitle">Male</label>
+              <input
+                type="radio"
+                id="female"
+                name="gender"
+                value="female"
+              /><label for="female" id="femaleTitle">Female</label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label id="weightLabel">Weight (kg):</label>
+            <input type="number" id="weight" step="0.1" required />
+          </div>
+
+          <div class="form-group">
+            <label id="heightLabel">Height (cm):</label>
+            <input type="number" id="height" step="0.1" required />
+          </div>
+
+          <div class="form-group">
+            <label id="ageLabel">Age:</label>
+            <input type="number" id="age" required />
+          </div>
+
+          <div class="form-group">
+            <label id="activityLabel">Activity Level:</label>
+            <select id="activityLevel" required>
+              <option value="1" id="sedentaryActivity"></option>
+              <option value="2" id="lightActivity"></option>
+              <option value="3" id="moderateActivity"></option>
+              <option value="4" id="activeActivity"></option>
+              <option value="5" id="veryActiveActivity"></option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label id="goalLabel">Goal:</label>
+            <select id="goal" required>
+              <option value="1" id="goalMuscleGain"></option>
+              <option value="2" id="goalWeightLoss"></option>
+              <option value="3" id="goalWeightMaintenance"></option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label id="fatLabel">Body Fat Percentage (%):</label>
+            <input
+              type="number"
+              id="fatPercentage"
+              min="0"
+              max="100"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label id="waterLabel">Body Water Percentage (%):</label>
+            <input
+              type="number"
+              id="waterPercentage"
+              min="0"
+              max="100"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label id="planLabel">Choose Your Plan:</label>
+            <div class="radio-group">
+              <input
+                type="radio"
+                id="foodPlan"
+                name="planType"
+                value="1"
+                required
+              /><label for="foodPlan" id="foodPlanTitle">Diet Plan Only</label>
+              <input
+                type="radio"
+                id="fitnessPlan"
+                name="planType"
+                value="2"
+              /><label for="fitnessPlan" id="fitnessPlanTitle"
+                >Workout Plan Only</label
+              >
+              <input
+                type="radio"
+                id="bothPlans"
+                name="planType"
+                value="3"
+              /><label for="bothPlans" id="bothPlanTitle">Both Plans</label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label id="supplementsLabel">Do You Want Supplements?</label>
+            <div class="radio-group">
+              <input
+                type="radio"
+                id="yesSupplements"
+                name="supplements"
+                value="yes"
+                required
+              /><label for="yesSupplements" id="yes">Yes</label>
+              <input
+                type="radio"
+                id="noSupplements"
+                name="supplements"
+                value="no"
+              /><label for="noSupplements" id="no">No</label>
+            </div>
+          </div>
+
+          <button type="submit" class="btn" id="calculateButton"></button>
+        </form>
+      </div>
+    </div>
+
+    <div
+      id="dateTime"
+      style="
+        text-align: center;
+        margin-top: 15px;
+        font-size: 12px;
+        color: #7f8c8d;
+      "
+    ></div>
+
+    <script src="assets/main.js"></script>
+    <script>
+      // Get current user from localStorage
+      let currentUser = JSON.parse(localStorage.getItem("currentUser"));
+      let users = JSON.parse(localStorage.getItem("users")) || [];
+
+      // Redirect if no user is logged in
+      if (!currentUser) {
+        window.location.href = "language.html";
+      }
+
+      // Handle form submission
+      document
+        .getElementById("userForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          // Collect form data
+          const formData = {
+            name: document.getElementById("userName").value,
+            gender: document.querySelector('input[name="gender"]:checked')
+              .value,
+            weight: parseFloat(document.getElementById("weight").value),
+            height: parseFloat(document.getElementById("height").value),
+            age: parseInt(document.getElementById("age").value),
+            activityLevel: parseInt(
+              document.getElementById("activityLevel").value
+            ),
+            goal: parseInt(document.getElementById("goal").value),
+            fatPercentage: parseFloat(
+              document.getElementById("fatPercentage").value
+            ),
+            waterPercentage: parseFloat(
+              document.getElementById("waterPercentage").value
+            ),
+            planType: parseInt(
+              document.querySelector('input[name="planType"]:checked').value
+            ),
+            supplements: document.querySelector(
+              'input[name="supplements"]:checked'
+            ).value,
+          };
+
+          // Update current user
+          currentUser = { ...currentUser, ...formData, hasCompletedInfo: true };
+
+          // Update users array
+          const userIndex = users.findIndex(
+            (u) => u.email === currentUser.email
+          );
+          if (userIndex !== -1) {
+            users[userIndex] = currentUser;
+          }
+
+          // Save to localStorage
+          localStorage.setItem("currentUser", JSON.stringify(currentUser));
+          localStorage.setItem("users", JSON.stringify(users));
+
+          // Redirect to results page
+          window.location.href = "results.html";
+        });
+    </script>
+  </body>
+</html>

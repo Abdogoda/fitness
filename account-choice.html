@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes"
+    />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Fitness Program - Account Options</title>
+    <meta name="keywords" content="fitnessPlan, fitness, gym, calories" />
+    <meta name="author" content="Omar Ahmed" />
+    <link rel="icon" type="image/x-icon" href="assets/icon.png" />
+    <link rel="stylesheet" href="assets/styles.css" />
+  </head>
+  <body>
+    <!-- Top Controls -->
+    <div class="top-controls">
+      <button
+        class="control-btn lang-btn"
+        id="langToggle"
+        onclick="toggleLanguage()"
+      >
+        EN
+      </button>
+      <button
+        class="control-btn theme-btn"
+        id="themeToggle"
+        onclick="toggleTheme()"
+      >
+        ☀️
+      </button>
+    </div>
+
+    <div class="container table-responsive">
+      <div class="container" id="accountChoiceContainer">
+        <div class="section">
+          <h2 id="accountChoiceTitle">Account Options</h2>
+          <div class="form-group">
+            <label id="accountQuestion"></label>
+            <div class="radio-group">
+              <button
+                class="btn"
+                id="hasAccountBtn"
+                onclick="goToLogin()"
+              ></button>
+              <button
+                class="btn"
+                id="noAccountBtn"
+                onclick="goToRegister()"
+              ></button>
+            </div>
+          </div>
+          <div id="message"></div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      id="dateTime"
+      style="
+        text-align: center;
+        margin-top: 15px;
+        font-size: 12px;
+        color: #7f8c8d;
+      "
+    ></div>
+
+    <script src="assets/main.js"></script>
+    <script>
+      function goToLogin() {
+        window.location.href = "login.html";
+      }
+
+      function goToRegister() {
+        window.location.href = "register.html";
+      }
+    </script>
+  </body>
+</html>

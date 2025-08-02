@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes"
+    />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title id="loginPageTitle">Fitness Program - Login</title>
+    <meta name="keywords" content="fitnessPlan, fitness, gym, calories" />
+    <meta name="author" content="Omar Ahmed" />
+    <link rel="icon" type="image/x-icon" href="assets/icon.png" />
+    <link rel="stylesheet" href="assets/styles.css" />
+  </head>
+  <body>
+    <!-- Top Controls -->
+    <div class="top-controls">
+      <button
+        class="control-btn lang-btn"
+        id="langToggle"
+        onclick="toggleLanguage()"
+      >
+        EN
+      </button>
+      <button
+        class="control-btn theme-btn"
+        id="themeToggle"
+        onclick="toggleTheme()"
+      >
+        ☀️
+      </button>
+    </div>
+
+    <div class="container table-responsive">
+      <div class="container" id="loginContainer">
+        <div class="section">
+          <h2 id="loginTitle">Login</h2>
+          <form id="loginForm">
+            <div class="form-group">
+              <label id="loginEmailLabel">Email / البريد الإلكتروني</label>
+              <input type="email" id="loginEmail" required />
+              <div class="error" id="loginError" style="display: none">
+                Email not found / البريد غير موجود
+              </div>
+            </div>
+            <div class="form-group">
+              <label id="loginPasswordLabel">Password / كلمة المرور</label>
+              <input type="password" id="loginPassword" required />
+            </div>
+            <button type="submit" class="btn" id="loginButton">
+              Login / تسجيل الدخول
+            </button>
+          </form>
+          <div id="loginSuccess"></div>
+          <p style="text-align: center; margin-top: 15px">
+            <a href="register.html" id="registerLink"
+              >Don't have an account? Register here / ليس لديك حساب؟ سجل هنا</a
+            >
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div
+      id="dateTime"
+      style="
+        text-align: center;
+        margin-top: 15px;
+        font-size: 12px;
+        color: #7f8c8d;
+      "
+    ></div>
+
+    <script src="assets/main.js"></script>
+    <script>
+      // Get selected language from localStorage
+      let users = JSON.parse(localStorage.getItem("users")) || [];
+
+      // Handle login form submission
+      document
+        .getElementById("loginForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          const email = document.getElementById("loginEmail").value;
+          const password = document.getElementById("loginPassword").value;
+
+          // Find user
+          const user = users.find((u) => u.email === email);
+
+          if (!user) {
+            document.getElementById("loginError").style.display = "block";
+            document.getElementById("loginError").textContent =
+              translations[currentLanguage].emailNotFound;
+            return;
+          }
+
+          if (user.password !== password) {
+            document.getElementById("loginError").style.display = "block";
+            document.getElementById("loginError").textContent =
+              translations[currentLanguage].wrongPassword;
+            return;
+          }
+
+          // Login successful
+          localStorage.setItem("currentUser", JSON.stringify(user));
+          document.getElementById("loginSuccess").textContent =
+            translations[currentLanguage].loginSuccess;
+          document.getElementById("loginSuccess").style.color = "green";
+
+          // Redirect to basic info or results based on user data
+          setTimeout(() => {
+            if (user.hasCompletedInfo) {
+              window.location.href = "results.html";
+            } else {
+              window.location.href = "basic-info.html";
+            }
+          }, 1500);
+        });
+    </script>
+  </body>
+</html>
