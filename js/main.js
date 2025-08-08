@@ -15,6 +15,7 @@ const translations = {
     registerTitle: "Register",
     registerEmailLabel: "Email",
     registerPasswordLabel: "Password",
+    confirmPasswordLabel: "Confirm Password",
     emailError: "Please enter a valid email address.",
     passwordError: "Password must be at least 6 characters long.",
     infoTitle: "Basic Information",
@@ -112,6 +113,7 @@ const translations = {
     showExercisesbtn: "Show Exercises",
     backToBasicInfoBtn: "Back to Basic Information",
     logoutBtn: "Logout",
+    logoutBtn: "Logout",
 
     resultsTitle: "Results",
     needsTitle: "Your Daily Needs:",
@@ -159,6 +161,7 @@ const translations = {
     registerTitle: "إنشاء حساب",
     registerEmailLabel: "البريد الإلكتروني",
     registerPasswordLabel: "كلمة المرور",
+    confirmPasswordLabel: "تأكيد كلمة المرور",
     emailError: "يرجى إدخال عنوان بريد إلكتروني صالح.",
     passwordError: "يجب أن تكون كلمة المرور مكونة من 6 أحرف على الأقل.",
     registerButton: "إنشاء حساب",
@@ -263,6 +266,7 @@ const translations = {
     showExercisesBtn: "إظهار التمارين",
     backToBasicInfoBtn: "العودة إلى المعلومات الأساسية",
     logoutBtn: "تسجيل الخروج",
+    logoutBtn: "تسجيل الخروج",
 
     resultsTitle: "النتائج",
     needsTitle: "احتياجاتك اليومية:",
@@ -292,7 +296,7 @@ const translations = {
 };
 
 function updateTheme() {
-  theme = localStorage.getItem("selectedTheme") || "light";
+  theme = localStorage.getItem("selectedTheme") || "dark";
   if (theme === "dark") {
     document.body.classList.add("dark-theme");
     document.getElementById("themeToggle").textContent = "🌙";
@@ -305,7 +309,7 @@ function updateTheme() {
 }
 
 function updateLanguage() {
-  lang = localStorage.getItem("selectedLanguage") || "en";
+  lang = localStorage.getItem("selectedLanguage") || "ar";
   Object.keys(translations[lang]).forEach((key) => {
     const element = document.getElementById(key);
     if (element) {
@@ -313,13 +317,38 @@ function updateLanguage() {
     }
   });
 
+  // Set document direction and language
   document.body.dir = lang === "ar" ? "rtl" : "ltr";
+  document.documentElement.lang = lang;
+  
+  // Add/remove RTL class for additional styling control
+  if (lang === "ar") {
+    document.body.classList.add("rtl-active");
+    document.documentElement.classList.add("rtl-active");
+  } else {
+    document.body.classList.remove("rtl-active");
+    document.documentElement.classList.remove("rtl-active");
+  }
+  
   document.getElementById("langToggle").textContent = lang.toUpperCase();
 }
 
 function displayDateTime() {
   const now = new Date();
-  document.getElementById("dateTime").textContent = now.toLocaleString();
+  const options = {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  };
+  
+  // Format date according to language
+  if (lang === "ar") {
+    document.getElementById("dateTime").textContent = now.toLocaleDateString('ar', options);
+  } else {
+    document.getElementById("dateTime").textContent = now.toLocaleDateString('en', options);
+  }
 }
 
 function toggleLanguage() {
@@ -328,6 +357,12 @@ function toggleLanguage() {
   document.getElementById("langToggle").textContent = lang.toUpperCase();
   
   updateLanguage();
+  
+  // Trigger a smooth transition effect
+  document.body.style.opacity = '0.7';
+  setTimeout(() => {
+    document.body.style.opacity = '1';
+  }, 200);
 }
 
 function toggleTheme() {
@@ -342,3 +377,90 @@ updateLanguage();
 updateTheme();
 displayDateTime();
 setInterval(displayDateTime, 1000);
+
+// Enhanced Interactive Effects
+document.addEventListener('DOMContentLoaded', function() {
+    // Mouse tracking for background effect
+    document.addEventListener('mousemove', (e) => {
+        const mouseX = (e.clientX / window.innerWidth) * 100;
+        const mouseY = (e.clientY / window.innerHeight) * 100;
+        document.documentElement.style.setProperty('--mouse-x', mouseX + '%');
+        document.documentElement.style.setProperty('--mouse-y', mouseY + '%');
+    });
+
+    // Add stagger animation to form groups
+    const formGroups = document.querySelectorAll('.form-group');
+    formGroups.forEach((group, index) => {
+        group.style.animationDelay = `${index * 0.1}s`;
+    });
+
+    // Add stagger animation to result items
+    const resultItems = document.querySelectorAll('.result-item');
+    resultItems.forEach((item, index) => {
+        item.style.animationDelay = `${index * 0.1}s`;
+    });
+
+    // Enhanced button interactions
+    const buttons = document.querySelectorAll('.btn');
+    buttons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            // Create ripple effect
+            const ripple = document.createElement('span');
+            const rect = this.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            const x = e.clientX - rect.left - size / 2;
+            const y = e.clientY - rect.top - size / 2;
+            
+            ripple.style.width = ripple.style.height = size + 'px';
+            ripple.style.left = x + 'px';
+            ripple.style.top = y + 'px';
+            ripple.classList.add('ripple');
+            
+            this.appendChild(ripple);
+            
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
+        });
+    });
+
+    // Add floating animation to header
+    const header = document.querySelector('header');
+    if (header) {
+        header.classList.add('floating');
+    }
+
+    // Enhanced form validation with better UX
+    const inputs = document.querySelectorAll('input, select, textarea');
+    inputs.forEach(input => {
+        input.addEventListener('focus', function() {
+            this.parentElement.querySelector('label').style.color = 'var(--primary-color)';
+        });
+        
+        input.addEventListener('blur', function() {
+            this.parentElement.querySelector('label').style.color = 'var(--text-primary)';
+        });
+    });
+});
+
+// Add CSS for ripple effect
+const rippleCSS = `
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    animation: ripple-animation 0.6s linear;
+    pointer-events: none;
+}
+
+@keyframes ripple-animation {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+`;
+
+const style = document.createElement('style');
+style.textContent = rippleCSS;
+document.head.appendChild(style);

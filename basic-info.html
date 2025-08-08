@@ -10,8 +10,8 @@
     <title id="basicInfoPageTitle">Fitness Program - Basic Information</title>
     <meta name="keywords" content="fitnessPlan, fitness, gym, calories" />
     <meta name="author" content="Omar Ahmed" />
-    <link rel="icon" type="image/x-icon" href="assets/icon.png" />
-    <link rel="stylesheet" href="assets/styles.css" />
+    <link rel="icon" type="image/x-icon" href="images/icon.png" />
+    <link rel="stylesheet" href="css/styles.css" />
   </head>
   <body>
     <!-- Top Controls -->
@@ -185,7 +185,7 @@
       "
     ></div>
 
-    <script src="assets/main.js"></script>
+    <script src="js/main.js"></script>
     <script>
       // Get current user from localStorage
       let currentUser = JSON.parse(localStorage.getItem("currentUser"));
@@ -193,7 +193,7 @@
 
       // Redirect if no user is logged in
       if (!currentUser) {
-        window.location.href = "language.html";
+        window.location.href = "index.html";
       }
 
       // Handle form submission

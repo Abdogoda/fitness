@@ -10,8 +10,8 @@
     <title id="loginPageTitle">Fitness Program - Login</title>
     <meta name="keywords" content="fitnessPlan, fitness, gym, calories" />
     <meta name="author" content="Omar Ahmed" />
-    <link rel="icon" type="image/x-icon" href="assets/icon.png" />
-    <link rel="stylesheet" href="assets/styles.css" />
+    <link rel="icon" type="image/x-icon" href="images/icon.png" />
+    <link rel="stylesheet" href="css/styles.css" />
   </head>
   <body>
     <!-- Top Controls -->
@@ -34,30 +34,46 @@
 
     <div class="container table-responsive">
       <div class="container" id="loginContainer">
-        <div class="section">
+        <div class="section auth-form">
           <h2 id="loginTitle">Login</h2>
           <form id="loginForm">
             <div class="form-group">
               <label id="loginEmailLabel">Email / البريد الإلكتروني</label>
-              <input type="email" id="loginEmail" required />
-              <div class="error" id="loginError" style="display: none">
-                Email not found / البريد غير موجود
-              </div>
+              <input
+                type="email"
+                id="loginEmail"
+                required
+                autocomplete="email"
+                placeholder="Enter your email address"
+              />
             </div>
-            <div class="form-group">
+            <div class="form-group has-password-toggle">
               <label id="loginPasswordLabel">Password / كلمة المرور</label>
-              <input type="password" id="loginPassword" required />
+              <input
+                type="password"
+                id="loginPassword"
+                required
+                autocomplete="current-password"
+                placeholder="Enter your password"
+              />
+              <button
+                type="button"
+                class="password-toggle"
+                onclick="togglePasswordVisibility('loginPassword')"
+              >
+                👁️
+              </button>
             </div>
             <button type="submit" class="btn" id="loginButton">
               Login / تسجيل الدخول
             </button>
           </form>
-          <div id="loginSuccess"></div>
-          <p style="text-align: center; margin-top: 15px">
-            <a href="register.html" id="registerLink"
-              >Don't have an account? Register here / ليس لديك حساب؟ سجل هنا</a
-            >
-          </p>
+
+          <div class="auth-link">
+            <a href="register.html" id="registerLink">
+              Don't have an account? Register here / ليس لديك حساب؟ سجل هنا
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -72,52 +88,37 @@
       "
     ></div>
 
-    <script src="assets/main.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/auth.js"></script>
     <script>
-      // Get selected language from localStorage
-      let users = JSON.parse(localStorage.getItem("users")) || [];
+      // Password visibility toggle
+      function togglePasswordVisibility(inputId) {
+        const input = document.getElementById(inputId);
+        const toggle = input.parentNode.querySelector(".password-toggle");
 
-      // Handle login form submission
-      document
-        .getElementById("loginForm")
-        .addEventListener("submit", function (e) {
-          e.preventDefault();
+        if (input.type === "password") {
+          input.type = "text";
+          toggle.textContent = "🙈";
+        } else {
+          input.type = "password";
+          toggle.textContent = "👁️";
+        }
+      }
 
-          const email = document.getElementById("loginEmail").value;
-          const password = document.getElementById("loginPassword").value;
+      // Add placeholders based on language
+      document.addEventListener("DOMContentLoaded", function () {
+        const lang = localStorage.getItem("selectedLanguage") || "ar";
+        const emailInput = document.getElementById("loginEmail");
+        const passwordInput = document.getElementById("loginPassword");
 
-          // Find user
-          const user = users.find((u) => u.email === email);
-
-          if (!user) {
-            document.getElementById("loginError").style.display = "block";
-            document.getElementById("loginError").textContent =
-              translations[currentLanguage].emailNotFound;
-            return;
-          }
-
-          if (user.password !== password) {
-            document.getElementById("loginError").style.display = "block";
-            document.getElementById("loginError").textContent =
-              translations[currentLanguage].wrongPassword;
-            return;
-          }
-
-          // Login successful
-          localStorage.setItem("currentUser", JSON.stringify(user));
-          document.getElementById("loginSuccess").textContent =
-            translations[currentLanguage].loginSuccess;
-          document.getElementById("loginSuccess").style.color = "green";
-
-          // Redirect to basic info or results based on user data
-          setTimeout(() => {
-            if (user.hasCompletedInfo) {
-              window.location.href = "results.html";
-            } else {
-              window.location.href = "basic-info.html";
-            }
-          }, 1500);
-        });
+        if (lang === "ar") {
+          emailInput.placeholder = "أدخل بريدك الإلكتروني";
+          passwordInput.placeholder = "أدخل كلمة المرور";
+        } else {
+          emailInput.placeholder = "Enter your email address";
+          passwordInput.placeholder = "Enter your password";
+        }
+      });
     </script>
   </body>
 </html>

@@ -4,7 +4,7 @@ let users = JSON.parse(localStorage.getItem("users")) || [];
 
 // Redirect if no user is logged in
 if (!currentUser || !currentUser.hasCompletedInfo) {
-  window.location.href = 'language.html';
+  window.location.href = 'index.html';
 }
 
 // Food options data

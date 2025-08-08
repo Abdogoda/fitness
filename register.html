@@ -6,8 +6,8 @@
     <title id="registerPageTitle">Fitness Program - Register</title>
     <meta name="keywords" content="fitnessPlan, fitness, gym, calories" />
     <meta name="author" content="Omar Ahmed" />
-    <link rel="icon" type="image/x-icon" href="assets/icon.png" />
-    <link rel="stylesheet" href="assets/styles.css" />
+    <link rel="icon" type="image/x-icon" href="images/icon.png" />
+    <link rel="stylesheet" href="css/styles.css" />
   </head>
   <body>
     <!-- Top Controls -->
@@ -30,34 +30,66 @@
 
     <div class="container table-responsive">
       <div class="container" id="registrationContainer">
-        <div class="section">
-          <h2 id="registerTitle"></h2>
+        <div class="section auth-form">
+          <h2 id="registerTitle">Register</h2>
           <form id="registerForm">
             <div class="form-group">
-              <label id="registerEmailLabel"></label>
-              <input type="email" id="regEmail" required />
-              <div class="error" id="emailError" style="display: none"></div>
+              <label id="registerEmailLabel">Email / البريد الإلكتروني</label>
+              <input
+                type="email"
+                id="regEmail"
+                required
+                autocomplete="email"
+                placeholder="Enter your email address"
+              />
             </div>
-            <div class="form-group">
-              <label id="registerPasswordLabel"></label>
-              <input type="password" id="regPassword" required />
+            <div class="form-group has-password-toggle">
+              <label id="registerPasswordLabel">Password / كلمة المرور</label>
+              <input
+                type="password"
+                id="regPassword"
+                required
+                autocomplete="new-password"
+                placeholder="Create a strong password"
+              />
+              <button
+                type="button"
+                class="password-toggle"
+                onclick="togglePasswordVisibility('regPassword')"
+              >
+                👁️
+              </button>
             </div>
-            <button type="submit" class="btn" id="registerButton"></button>
+            <div class="form-group has-password-toggle">
+              <label id="confirmPasswordLabel"
+                >Confirm Password / تأكيد كلمة المرور</label
+              >
+              <input
+                type="password"
+                id="regConfirmPassword"
+                required
+                autocomplete="new-password"
+                placeholder="Confirm your password"
+              />
+              <button
+                type="button"
+                class="password-toggle"
+                onclick="togglePasswordVisibility('regConfirmPassword')"
+              >
+                👁️
+              </button>
+            </div>
+            <button type="submit" class="btn" id="registerButton">
+              Register / تسجيل
+            </button>
           </form>
-          <div
-            id="registrationSuccess"
-            style="display: none; color: green"
-          ></div>
 
-          <p style="text-align: center; margin-top: 15px">
-            <a href="login.html" id="loginLink"
-              >Already have an account? Login here / لديك حساب بالفعل؟ تسجيل
-              الدخول هنا</a
-            >
-          </p>
-          <p style="text-align: center; margin-top: 15px">
-            <a href="login.html"></a>
-          </p>
+          <div class="auth-link">
+            <a href="login.html" id="loginLink">
+              Already have an account? Login here / لديك حساب بالفعل؟ تسجيل
+              الدخول هنا
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -72,51 +104,41 @@
       "
     ></div>
 
-    <script src="assets/main.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/auth.js"></script>
     <script>
-      let users = JSON.parse(localStorage.getItem("users")) || [];
-      let registeredEmails =
-        JSON.parse(localStorage.getItem("registeredEmails")) || [];
-      // Handle registration form submission
-      document
-        .getElementById("registerForm")
-        .addEventListener("submit", function (e) {
-          e.preventDefault();
+      // Password visibility toggle
+      function togglePasswordVisibility(inputId) {
+        const input = document.getElementById(inputId);
+        const toggle = input.parentNode.querySelector(".password-toggle");
 
-          const email = document.getElementById("regEmail").value;
-          const password = document.getElementById("regPassword").value;
+        if (input.type === "password") {
+          input.type = "text";
+          toggle.textContent = "🙈";
+        } else {
+          input.type = "password";
+          toggle.textContent = "👁️";
+        }
+      }
 
-          // Check if email already exists
-          if (registeredEmails.includes(email)) {
-            document.getElementById("emailError").style.display = "block";
-            return;
-          } // Add new user
-          const newUser = {
-            email: email,
-            password: password,
-            hasCompletedInfo: false,
-          };
+      // Add placeholders based on language
+      document.addEventListener("DOMContentLoaded", function () {
+        const lang = localStorage.getItem("selectedLanguage") || "ar";
+        const emailInput = document.getElementById("regEmail");
+        const passwordInput = document.getElementById("regPassword");
+        const confirmPasswordInput =
+          document.getElementById("regConfirmPassword");
 
-          users.push(newUser);
-          registeredEmails.push(email);
-
-          // Save to localStorage
-          localStorage.setItem("users", JSON.stringify(users));
-          localStorage.setItem(
-            "registeredEmails",
-            JSON.stringify(registeredEmails)
-          );
-          localStorage.setItem("currentUser", JSON.stringify(newUser));
-
-          // Show success message
-          document.getElementById("registrationSuccess").style.display =
-            "block";
-
-          // Redirect to basic info page
-          setTimeout(() => {
-            window.location.href = "basic-info.html";
-          }, 1500);
-        });
+        if (lang === "ar") {
+          emailInput.placeholder = "أدخل بريدك الإلكتروني";
+          passwordInput.placeholder = "أنشئ كلمة مرور قوية";
+          confirmPasswordInput.placeholder = "أكد كلمة المرور";
+        } else {
+          emailInput.placeholder = "Enter your email address";
+          passwordInput.placeholder = "Create a strong password";
+          confirmPasswordInput.placeholder = "Confirm your password";
+        }
+      });
     </script>
   </body>
 </html>
